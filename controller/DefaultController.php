@@ -9,5 +9,19 @@
 require_once("AppController.php");
 
 class DefaultController extends AppController {
-    
+
+
+    /**
+     * DefaultController constructor.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function login(string $fileName = null) {
+        //renderowanie szablonu z katalogu views
+        $view = $fileName ? dirname(__DIR__).'\view\\'.get_class($this).'\\'.$fileName.'.php' : '';
+
+    }
 }
