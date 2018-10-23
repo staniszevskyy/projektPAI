@@ -1,6 +1,4 @@
-<!DOCTYPE html>
-<html>
-<body>
+
 <?php
 
 
@@ -12,11 +10,8 @@ $this->surname = $surname;
 $this->name = $name;
 }
 function setSurname($surname){$this->surname = $surname;}
-function getName(){return $this->name;}
+function getName(){return $this->name;}}
 
 
 
-?>
-</body>
 
-</html>
