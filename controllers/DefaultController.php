@@ -18,7 +18,7 @@ class DefaultController extends AppController
     {
         $text = 'Hello there 👋';
 
-        $this->render('index', ['text' => $text]);
+        $this->render('home', ['text' => $text]);
     }
 
     public function login()

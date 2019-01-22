@@ -1,10 +1,9 @@
 <head>
-    <title>Foodtruck Map</title>
+    <title>PAI - Laboratory 3</title>
     <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
     <!-- icons set: https://material.io/tools/icons -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-    <link href="https://fonts.googleapis.com/css?family=Coiny" rel="stylesheet">
 
     <script
             src="https://code.jquery.com/jquery-3.3.1.js"

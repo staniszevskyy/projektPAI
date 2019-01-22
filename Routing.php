@@ -1,6 +1,7 @@
 <?php
 
 require_once('controllers/DefaultController.php');
+require_once('controllers/AdminController.php');
 
 class Routing
 {
@@ -16,6 +17,18 @@ class Routing
             'login' => [
                 'controller' => 'DefaultController',
                 'action' => 'login'
+            ],
+            'admin' => [
+                'controller' => 'AdminController',
+                'action' => 'index'
+            ],
+            'admin_users' => [
+                'controller' => 'AdminController',
+                'action' => 'users'
+            ],
+            'admin_delete_user' => [
+                'controller' => 'AdminController',
+                'action' => 'userDelete'
             ]
         ];
     }
