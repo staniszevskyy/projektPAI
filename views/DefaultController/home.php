@@ -6,24 +6,25 @@
 <body>
 
     <div id="container">
-        <div id="header" >
+        <div class="main">
+            <div id="header" >
 
-            <span><h1 id="text">Foodtruck Localizator</h1></span>
-            <span><img src="../../public/res/foodtruck.jpg" class="img-fluid" alt="Responsive image"   id="foodtruck"></span>
+                <span><h1 id="text">Foodtruck Localizator</h1></span>
+                <span><img src="../../public/res/foodtruck.jpg" class="img-fluid" alt="Responsive image"   id="foodtruck"></span>
+
+            </div>
+            <div id="navigation-bar">
+                <?php include(dirname(__DIR__).'/navbar.html') ?>
+            </div>
+
 
         </div>
-        <div id="navigation-bar">
-            <?php include(dirname(__DIR__).'/navbar.html') ?>
-        </div>
-
-        <div id="content">
-
-
-        </div>
-
         <div id="footer">
-            Copyright mateusz sateniszewski
+            Copyright Mateusz Staniszewski
         </div>
+
+
+
     </div>
 
 </body>

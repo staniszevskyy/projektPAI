@@ -18,6 +18,10 @@ class Routing
                 'controller' => 'DefaultController',
                 'action' => 'login'
             ],
+            'register' => [
+                'controller' => 'DefaultController',
+                'action' => 'register'
+            ],
             'admin' => [
                 'controller' => 'AdminController',
                 'action' => 'index'

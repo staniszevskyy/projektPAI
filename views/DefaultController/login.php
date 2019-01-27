@@ -3,12 +3,12 @@
 
 <?php include(dirname(__DIR__).'/head.html') ?>
 
-<body>
+<body id="body_back">
 
-<div class="container">
+<div class="login">
     <div clas="row">
         <div class="col-sm-6 offset-sm-3">
-            <h1 class="panel-header">LOGIN</h1>
+            <h1 >Logowanie </h1>
             <hr>
             <?php if(isset($message)): ?>
                 <?php foreach($message as $item): ?>
@@ -22,7 +22,7 @@
                         <i class="material-icons md-48">email</i>
                     </label>
                     <div class="col-sm-11">
-                        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="email" required/>
+                        <input type="email" class="form-control" id="inputEmail" name="email" placeholder="E-mail" required/>
                     </div>
                 </div>
                 <div class="form-group row">
@@ -30,10 +30,10 @@
                         <i class="material-icons md-48">person</i>
                     </label>
                     <div class="col-sm-11">
-                        <input type="password" name="password" class="form-control" id="inputPassword" placeholder="password" type="password" required/>
+                        <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Hasło" type="password" required/>
                     </div>
                 </div>
-                <input type="submit" value="Sign in" class="btn btn-primary btn-lg float-right" />
+                <input type="submit" value="Zaloguj się" class="btn btn-primary btn-lg float-right" />
             </form>
         </div>
     </div>
