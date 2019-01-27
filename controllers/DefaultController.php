@@ -1,7 +1,6 @@
 <?php
 
 require_once "AppController.php";
-
 require_once __DIR__.'/../model/User.php';
 require_once __DIR__.'/../model/UserMapper.php';
 
@@ -9,9 +8,12 @@ require_once __DIR__.'/../model/UserMapper.php';
 class DefaultController extends AppController
 {
 
+    private $construct;
+
     public function __construct()
     {
-        parent::__construct();
+        $this->construct = parent::__construct();
+        $this->construct;
     }
 
     public function index()
@@ -53,7 +55,94 @@ class DefaultController extends AppController
 
     public function register()
     {
+        if ($this->isPost()) {
+            
+            $validation = true;
+            $user = $_POST['username'];
+            $email = $_POST['email'];
+            $emailSafe = filter_var($email, FILTER_SANITIZE_EMAIL);
+            $pass1 = $_POST['pass1'];
+            $pass2 = $_POST['pass2'];
+            $haslo_hash = password_hash($pass1, PASSWORD_DEFAULT);
+
+            if (strlen($user)<3 || strlen($user)>20)
+            {
+                var_dump("cond1");
+                $validation=false;
+                $_SESSION['e_nick'] = "Nazwa użytkownika musi posiadać od 3 do 20 znaków";
+            }
+           
+            if (ctype_alnum($user)==false)
+            {
+                var_dump("cond2");
+                $validation=false;
+                $_SESSION['e_nick']="Nick moze skladac sie tylko z liter i cyfr(bez polskich znaków)";
+            }
+
+            
+            
+            if(filter_var($emailSafe, FILTER_VALIDATE_EMAIL)==false || $emailSafe!=$email)
+            {
+                var_dump("cond3");
+                $validation=false;
+                $_SESSION['e_email']="Podaj poprawny adres e-mail";
+            }
+
+            if (strlen($pass1) <8 || strlen($pass2) >20)
+            {
+                var_dump("con4");
+                $validation=false;
+                $_SESSION['e_pass']="Hasło musi posiadać od 8 do 20 znaków";
+            }
+
+            if ($pass1 != $pass2)
+            {
+                var_dump("cond5");
+                $validation=false;
+                $_SESSION['e_pass']="Podane hasla nie sa identyczne";
+
+            }
+
+            if (!(isset($_POST['accept']))){
+                var_dump("cond6");
+                $validation=false;
+                $_SESSION['e_accept']="Nie zaakceptowano regulaminu";
+            }
+
+            $_SESSION['r_user']=$user;
+            $_SESSION['r_email']=$email;
+            $_SESSION['r_pass1']=$pass1;
+            $_SESSION['r_pass2']=$pass2;
+
+            $mapper = new UserMapper();
+//            $user_db = $mapper->getUser($email);
+//            if ($user_db->getEmail() != null) {
+//                var_dump("cond7");
+//                $validation=false;
+//                if ($user_db->getEmail() == $emailSafe)
+//                    $_SESSION['e_email'] = "Istnieje już użytkownik o zadanym adresie email";
+//                
+//                
+//            }
+//            $user_db = $mapper->getUserByNickname($user);
+//            
+//            if ($user_db->getNick() != null) {
+//                var_dump("con8");
+//                $validation=false;
+//                if ($user_db->getNick() == $user)
+//                    $_SESSION['e_nick'] = "Istnieje już użytkownik o zadanym loginie";
+//            }
+            var_dump($validation);
+            if ($validation == true ) {
+                var_dump('jestesmy tu');
+                $mapper->addUser($user, $haslo_hash, $emailSafe, 0);
+            
+            }
+        }
+
         $this->render('register');
+
+        
     }
 
     public function aboutUs()

@@ -9,7 +9,7 @@
     <div class="card" style="width: 60rem;">
         <h1 class="card-title">Kontakt</h1>
         <div class="card-body">
-            <h5 class="card-title">Informacje kontaktowe</h5>
+            <h5 class="card-text">Informacje kontaktowe</h5>
             <p class="card-text">Jakies dane kontaktowe</p>
 
             <div id="icons">

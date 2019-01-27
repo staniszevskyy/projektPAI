@@ -88,13 +88,18 @@ span {
     width: 500px;
     background-color: white;
     padding: 20px;
-    border-radius: 50px;
+    border-radius: 50px !important;
 
 }
 
 
+.card-title {
+    padding: 10px 0px 0px 60px;
+    font-family: "Comic Sans MS";
+}
 
-#register-back, #body_back, #contact-back{
+
+#register-back, #body_back, #contact-back, #about-back, #gain-back{
     background-color: #E5C6C4;
 
 }
@@ -119,4 +124,12 @@ span {
 
 .fa-twitter {
     color: #1da1f2;
+}
+
+.error
+{
+    color:red;
+    font-weight: bold;
+   padding-bottom: 10px;
+
 }
