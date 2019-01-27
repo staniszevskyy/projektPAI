@@ -48,10 +48,6 @@ span {
 
 
 
-/*#content {*/
-    /*background-color: red;*/
-    /*height: 500px;*/
-/*}*/
 #navigation-bar{
     /*padding: 10px;*/
     overflow:auto;
@@ -75,18 +71,16 @@ span {
     height: 40px;
     padding-right: 20px;
     padding-top:20px;
-
     clear:both;
-
     background-color: #999999;
     color:white;
     text-align: right;
 
 }
 
-.register, .login {
+.register, .login,.card {
     margin: 0;
-    position: absolute;               /* 2 */
+    position: absolute !important;              /* 2 */
     top: 50%;                         /* 3 */
     left: 50%;
     margin-right: -50%;
@@ -97,19 +91,32 @@ span {
     border-radius: 50px;
 
 }
-#register-back, #body_back{
+
+
+
+#register-back, #body_back, #contact-back{
     background-color: #E5C6C4;
 
 }
 
-/*.register-back{*/
-    /*width: 600px;*/
-    /*position: absolute;*/
-    /*top: 50%;*/
-    /*left: 50%;*/
-    /*transform: translate(-50%, -50%);*/
-    /*margin: 0;*/
-    /*margin-right: -50%;*/
-    /*background-color: white !important;*/
-/*}*/
 
+#icons{
+    font-size: 80px;
+
+}
+
+.fa-facebook, .fa-twitter, .fa-youtube {
+    padding: 20px;
+}
+
+.fa-youtube {
+    color: red;
+}
+
+.fa-facebook {
+    color: #4267b2;
+}
+
+.fa-twitter {
+    color: #1da1f2;
+}

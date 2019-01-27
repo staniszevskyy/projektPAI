@@ -18,18 +18,15 @@
 
             <form action="?page=login" method="POST">
                 <div class="form-group row">
-                    <label for="inputEmail" class="col-sm-1 col-form-label">
-                        <i class="material-icons md-48">email</i>
-                    </label>
-                    <div class="col-sm-11">
+
+                    <div class="col-sm-auto">
                         <input type="email" class="form-control" id="inputEmail" name="email" placeholder="E-mail" required/>
                     </div>
+
                 </div>
                 <div class="form-group row">
-                    <label for="inputPassword" class="col-sm-1 col-form-label">
-                        <i class="material-icons md-48">person</i>
-                    </label>
-                    <div class="col-sm-11">
+
+                    <div class="col-sm-auto">
                         <input type="password" name="password" class="form-control" id="inputPassword" placeholder="Hasło" type="password" required/>
                     </div>
                 </div>
@@ -39,6 +36,10 @@
     </div>
 </div>
 
+
 </body>
 </html>
+
+
+
 

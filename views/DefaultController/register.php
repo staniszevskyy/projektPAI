@@ -7,7 +7,12 @@
 <body id="register-back">
 <div class="register-back">
     <form>
-        <div class="register"><div class="form-group">
+
+        <div class="register">
+            <h1 class="form-group">Zarejestruj się</h1>
+
+
+            <div class="form-group">
             <label for="inputEmail">Adres e-mail</label>
             <input type="email" class="form-control" id="inputEmail" placeholder="Wprowadź e-mail">
 
@@ -31,7 +36,7 @@
             <input type="checkbox" class="form-check-input" id="acceptance">
             <label class="form-check-label" for="acceptance">Akceptuję regulamin</label>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">Zarejestruj</button>
         </div>
 
     </form>

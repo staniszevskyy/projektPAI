@@ -53,13 +53,23 @@ class DefaultController extends AppController
 
     public function register()
     {
-
-
-
         $this->render('register');
     }
 
+    public function aboutUs()
+    {
+        $this->render('aboutUs');
+    }
 
+    public function whatYouGain()
+    {
+        $this->render('gain');
+    }
+
+    public function contactInfo()
+    {
+        $this->render('contact');
+    }
     public function logout()
     {
         session_unset();

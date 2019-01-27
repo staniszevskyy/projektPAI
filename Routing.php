@@ -2,6 +2,7 @@
 
 require_once('controllers/DefaultController.php');
 require_once('controllers/AdminController.php');
+require_once('controllers/MapController.php');
 
 class Routing
 {
@@ -21,6 +22,22 @@ class Routing
             'register' => [
                 'controller' => 'DefaultController',
                 'action' => 'register'
+            ],
+            'aboutUs' => [
+                'controller' => 'DefaultController',
+                'action' => 'aboutUs'
+            ],
+            'gain' => [
+                'controller' => 'DefaultController',
+                'action' => 'whatYouGain'
+            ],
+            'contact' => [
+                'controller' => 'DefaultController',
+                'action' => 'contactInfo'
+            ],
+            'map' => [
+                'controller' => 'MapController',
+                'action' => 'index'
             ],
             'admin' => [
                 'controller' => 'AdminController',
