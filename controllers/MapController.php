@@ -5,6 +5,7 @@
  * Date: 27.01.2019
  * Time: 17:02
  */
+require_once __DIR__.'/../model/FoodtruckMapper.php';
 
 class MapController extends AppController
 {
@@ -15,7 +16,11 @@ class MapController extends AppController
 
     public function index()
     {
-        $this->render("map");
+        $mapper =new FoodtruckMapper();
+        $mapper->parseToXML();
+//        $this->render("map");
     }
+
+
 
 }
