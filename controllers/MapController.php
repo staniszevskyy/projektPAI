@@ -15,7 +15,7 @@ class MapController extends AppController
 
     public function index()
     {
-        $this->render("map")   ;
+        $this->render("map");
     }
 
 }
