@@ -94,7 +94,7 @@
         });
 
         var infoWindow = new google.maps.InfoWindow();
-        // Change this depending on the name of your PHP or XML file
+
         downloadUrl('/?page=xml', function(data) {
             var xml = data.responseXML;
             var markers = xml.documentElement.getElementsByTagName('foodtruck');
@@ -110,25 +110,43 @@
                     parseFloat(markerElem.getAttribute('lng')));
 
 
-                var infowincontent = document.createElement('div');
-                var strong = document.createElement('strong');
-                strong.textContent = name
-                infowincontent.appendChild(strong);
-                infowincontent.appendChild(document.createElement('br'));
-
-                var text = document.createElement('text');
-                text.textContent = address
-                infowincontent.appendChild(text);
 
                 var marker = new google.maps.Marker({
                     map: map,
                     position: point,
+                 
+                });
+                var contentString = '<div id="content">'+
+                    '<div class="infoWindow">'+
+                    '<h3 id="foodtruckName" class="foodtruckName">'+name+'</h3>'+
+                    '<h5 class="foodtruckAdress">'+address+'</h5>'+
+                    '<div id="bodyContent">'+
+                    '<p><b>'+name+'</b>, oferuje takie potrawy jak:' +
+                    '<ul> <li>item1</li> <li>item2</li> </ul>' +
+                    '<p>Otwarte:' +
+                    '<button onclick=navigateFoodtruck() type="button" class="btn btn-primary btn-lg float-right"><i class="fas fa-map-marker"></i></button>' +
+                    '</div>'+
+                    '</div>'+
+                    '</div>';
+
+
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
 
                 });
+
+
                 marker.addListener('click', function() {
-                    infoWindow.setContent(infowincontent);
-                    infoWindow.open(map, marker);
+
+                    infowindow.open(map, marker);
+                    map.panTo(point);
+                    map.setZoom(20);
+
                 });
+
+
+
             });
         });
 
@@ -152,6 +170,7 @@
                 marker.addListener('click', function() {
                     infoWindow.setContent(currLocationInfo);
                     infoWindow.open(map, marker);
+
                 });
 
 
@@ -203,6 +222,10 @@
         // map.setCenter(pos);
         map.panTo(pos);
         map.setZoom(16);
+    }
+
+    function navigateFoodtruck(){
+
     }
 
 </script>
