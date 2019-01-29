@@ -27,5 +27,10 @@ class MapController extends AppController
         $this->render("xml");
     }
 
+    public function search(){
+
+        $this->render("map");
+    }
+
 
 }

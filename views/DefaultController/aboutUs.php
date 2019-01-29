@@ -5,6 +5,7 @@
 
 <body id="about-back">
 <div class="about">
+    <div class="cardstyle"
     <div class="card" style="width: 60rem;">
         <h1 class="card-title">O nas</h1>
         <div class="card-body">
@@ -13,6 +14,7 @@
 
 
         </div>
+    </div>
     </div>
 </div>
 </body>

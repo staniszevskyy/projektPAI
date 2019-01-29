@@ -19,13 +19,16 @@
 
 
         </div>
-        <div id="footer">
-            Copyright Mateusz Staniszewski
+
+
+        <div class="fixed-bottom">
+            <div id="footer">
+                <h6>Copyright Mateusz Staniszewski</h6>
+            </div>
         </div>
 
-
-
     </div>
+
 
 </body>
 </html>

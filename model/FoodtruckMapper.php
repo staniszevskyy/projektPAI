@@ -1,42 +1,66 @@
 <?php
 
 require_once __DIR__.'/../Database.php';
+require_once __DIR__.'/Foodtruck.php';
 
 class FoodtruckMapper
 {
     private $database;
+    private $foodtruckList;
 
     public function __construct()
     {
         $this->database = new Database();
+        $this->foodtruckList=array();
+
     }
 
-    public function parseToXML()
+    public function getAllFoodtrucks()
     {
-        $doc = new DOMDocument('1.0');
+        try {
+            $stmt = $this->database->connect()->prepare('SELECT * FROM foodtrucks;');
+            if ($stmt->execute()) {
+                while ($row =  $stmt->fetch(PDO::FETCH_ASSOC))
+                {
+                    $foodtruck = new Foodtruck($row['name'],$row['address'], $row['lat'], $row['lng']);
+                    $this->foodtruckList[] = $foodtruck;
+                }
+            }
 
-        $node = $doc->createElement("foodtrucks");
-        $node = $doc->appendChild($node);
-        $stmt = $this->database->connect()->prepare("SELECT * FROM foodtrucks WHERE 1");
-
-
-        header("Content-type: text/xml");
-
-
-        if ($stmt->execute()) {
-    while ($row =  $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $newnode = $node->appendChild($doc->createElement('foodtruck'));
-        $newnode->appendChild($doc->createElement("id", $row['id']));
-        $newnode->appendChild($doc->createElement("name", $row['name']));
-        $newnode->appendChild($doc->createElement("address", $row['address']));
-        $newnode->appendChild($doc->createElement("lat", $row['lat']));
-        $newnode->appendChild($doc->createElement("lng", $row['lng']));
-
+        }
+        catch(PDOException $e) {
+            die();
+        }
     }
-    $stmt=null;
 
-    $XMLfile = $doc->saveXML();
-    echo $XMLfile;
-}
-}
+
+
+    public function getCertainFoodtrucks($name)
+    {
+        try {
+            $stmt = $this->database->connect()->prepare('SELECT * FROM foodtrucks WHERE name = :name;');
+            $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+            if ($stmt->execute()) {
+                while ($row =  $stmt->fetch(PDO::FETCH_ASSOC))
+                {
+
+                    $foodtruck = new Foodtruck($row['name'],$row['address'], $row['lat'], $row['lng']);
+                    $this->foodtruckList[] = $foodtruck;
+                }
+            }
+
+        }
+        catch(PDOException $e) {
+            die();
+        }
+    }
+
+
+
+    public function getFoodtruckList(): array
+    {
+        return $this->foodtruckList;
+    }
+
+
 }

@@ -6,26 +6,84 @@
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
     <style>
-        #map {
-            height: 100%;
-            width: 70%;
-            border-radius: 30px;
-            border:5px solid #d09995;
 
-        }
         /* Optional: Makes the sample page fill the window. */
         html, body {
+
             height: 100%;
             margin: 0px;
             padding: 10px;
             background-color: #E5C6C4;
-
         }
     </style>
 </head>
 <body>
+<?php
+    require_once __DIR__.'/../../model/FoodtruckMapper.php';
+    $get = new FoodtruckMapper();
+
+
+    if (isset($_POST['search']) and $_POST['search']!=""){
+        var_dump($_POST['search']);
+        $get->getCertainFoodtrucks($_POST['search']);
+
+    }
+
+    else{
+        $get->getAllFoodtrucks();
+    }
+    $get = $get->getFoodtruckList();
+    unset($_POST['search']);
+
+?>
+
+
 <div id="map"></div>
+
+<div id="list">
+    <div class="card" >
+        <div class="card-body">
+            <h5 class="card-title">Wyszukaj foodtruck</h5>
+            <form  action="?page=search" method="POST">
+                <div class="form-group">
+
+                <div class="input-group">
+
+                    <input type="text" class="form-control" id="search" name="search" aria-describedby="emailHelp" placeholder="Wpisz wyszukiwaną nazwę lub adres" >
+                        <span class="input-group-btn">
+                        <button class="btn btn-dark" type="submit" ><i class="fas fa-search"></i>
+                        </button>
+                        </span>
+
+                </div>
+                </div>
+            </form>
+
+
+
+
+            <ul class="list-group">
+                <?php foreach($get as $key=>$value): ?>
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">
+                                <?php echo $value->getName() ?>
+                            </h5>
+
+                        </div>
+                        <p class="mb-1">
+                            <?php echo $value->getAddress() ?>
+                        </p>
+                    </a>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
 
 <script>
     var map;
@@ -74,8 +132,49 @@
             });
         });
 
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
 
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: pos,
+
+                });
+                var currLocationInfo = document.createElement('div');
+                var strong = document.createElement('strong');
+                strong.textContent = "Twoja lokalizacja";
+                currLocationInfo.appendChild(strong);
+                currLocationInfo.appendChild(document.createElement('br'));
+                marker.addListener('click', function() {
+                    infoWindow.setContent(currLocationInfo);
+                    infoWindow.open(map, marker);
+                });
+
+
+
+          
+                map.setCenter(pos);
+            }, function() {
+                handleLocationError(true, infoWindow, map.getCenter());
+            });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
     }
+
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
+    }
+
 
     function downloadUrl(url, callback) {
         var request = window.ActiveXObject ?
