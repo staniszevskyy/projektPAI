@@ -24,19 +24,19 @@ class FoodtruckMapper
 
 
         if ($stmt->execute()) {
-            while ($row =  $stmt->fetch(PDO::FETCH_ASSOC)) {
-                $newnode = $node->appendChild($doc->createElement('foodtruck'));
-                $newnode->appendChild($doc->createElement("id", $row['id']));
-                $newnode->appendChild($doc->createElement("name", $row['name']));
-                $newnode->appendChild($doc->createElement("address", $row['address']));
-                $newnode->appendChild($doc->createElement("lat", $row['lat']));
-                $newnode->appendChild($doc->createElement("lng", $row['lng']));
+    while ($row =  $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $newnode = $node->appendChild($doc->createElement('foodtruck'));
+        $newnode->appendChild($doc->createElement("id", $row['id']));
+        $newnode->appendChild($doc->createElement("name", $row['name']));
+        $newnode->appendChild($doc->createElement("address", $row['address']));
+        $newnode->appendChild($doc->createElement("lat", $row['lat']));
+        $newnode->appendChild($doc->createElement("lng", $row['lng']));
 
-            }
-            $stmt=null;
-
-            $XMLfile = $doc->saveXML();
-            echo $XMLfile;
-        }
     }
+    $stmt=null;
+
+    $XMLfile = $doc->saveXML();
+    echo $XMLfile;
+}
+}
 }

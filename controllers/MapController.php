@@ -16,11 +16,16 @@ class MapController extends AppController
 
     public function index()
     {
-        $mapper =new FoodtruckMapper();
-        $mapper->parseToXML();
-//        $this->render("map");
+//        $mapper =new FoodtruckMapper();
+//        $mapper->parseToXML();
+
+        $this->render("map");
     }
 
+
+    public function xml(){
+        $this->render("xml");
+    }
 
 
 }
