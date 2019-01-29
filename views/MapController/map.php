@@ -66,7 +66,7 @@
 
             <ul class="list-group">
                 <?php foreach($get as $key=>$value): ?>
-                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                    <a onclick="foodtruckClicked(<?php echo $value->getLat(),', ', $value->getLtd() ?>)" class="list-group-item list-group-item-action flex-column align-items-start">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1">
                                 <?php echo $value->getName() ?>
@@ -156,7 +156,7 @@
 
 
 
-          
+
                 map.setCenter(pos);
             }, function() {
                 handleLocationError(true, infoWindow, map.getCenter());
@@ -193,6 +193,17 @@
     }
 
     function doNothing() {}
+
+    function foodtruckClicked(lat, ltd) {
+        var pos = {
+            lat: lat,
+            lng: ltd
+        };
+
+        // map.setCenter(pos);
+        map.panTo(pos);
+        map.setZoom(16);
+    }
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2EumDPAlhLjDCKlzLwlTgBa1eePjvpnY&callback=initMap"
