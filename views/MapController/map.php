@@ -88,10 +88,17 @@
 <script>
     var map;
     function initMap() {
+        directionsService = new google.maps.DirectionsService();
+
+        directionsDisplay = new google.maps.DirectionsRenderer(
+            {
+                suppressMarkers: true
+            });
         map = new google.maps.Map(document.getElementById('map'), {
             center: {lat: -34.397, lng: 150.644},
             zoom: 8
         });
+        directionsDisplay.setMap(map);
 
         var infoWindow = new google.maps.InfoWindow();
 
@@ -114,8 +121,13 @@
                 var marker = new google.maps.Marker({
                     map: map,
                     position: point,
-                 
+
                 });
+
+                var destination = [
+                    parseFloat(markerElem.getAttribute('lat')), parseFloat(markerElem.getAttribute('lng'))
+                    ];
+
                 var contentString = '<div id="content">'+
                     '<div class="infoWindow">'+
                     '<h3 id="foodtruckName" class="foodtruckName">'+name+'</h3>'+
@@ -124,12 +136,11 @@
                     '<p><b>'+name+'</b>, oferuje takie potrawy jak:' +
                     '<ul> <li>item1</li> <li>item2</li> </ul>' +
                     '<p>Otwarte:' +
-                    '<button onclick=navigateFoodtruck() type="button" class="btn btn-primary btn-lg float-right"><i class="fas fa-map-marker"></i></button>' +
+                    '<button type="button"  style="margin: 5px" class="btn btn-primary btn-lg float-right" onclick=navigateFoodtruck('+destination[0]+','+destination[1]+','+false+')><i class="fas fa-car"></i></button>' +
+                    '<button type="button" style="margin: 5px" class="btn btn-primary btn-lg float-right" onclick=navigateFoodtruck('+destination[0]+','+destination[1]+','+true+')><i class="fas fa-walking"></i></button>' +
                     '</div>'+
                     '</div>'+
                     '</div>';
-
-
 
                 var infowindow = new google.maps.InfoWindow({
                     content: contentString
@@ -224,8 +235,47 @@
         map.setZoom(16);
     }
 
-    function navigateFoodtruck(){
+    function navigateFoodtruck(lat, long, flag)
+    {
 
+        if (navigator.geolocation) {
+
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
+
+        var start = new google.maps.LatLng(pos['lat'], pos['lng']);
+
+        var end = new google.maps.LatLng(lat, long);
+        if (flag == true) {
+            var request = {
+                origin: start,
+                destination: end,
+                travelMode: 'WALKING'
+            };
+        }
+        else{
+            var request = {
+                    origin: start,
+                    destination: end,
+                    travelMode: 'WALKING'
+                };
+        }
+        directionsService.route(request, function(result, status) {
+            if (status == 'OK') {
+                directionsDisplay.setDirections(result);
+            }
+        });
+        },
+         function() {
+            handleLocationError(true, infoWindow, map.getCenter());
+        });
+        } else {
+            // Browser doesn't support Geolocation
+            handleLocationError(false, infoWindow, map.getCenter());
+        }
     }
 
 </script>
