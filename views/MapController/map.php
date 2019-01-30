@@ -87,7 +87,9 @@
 
 <script>
     var map;
+    //Inicjuj mapę
     function initMap() {
+        navigating=false;
         directionsService = new google.maps.DirectionsService();
 
         directionsDisplay = new google.maps.DirectionsRenderer(
@@ -99,55 +101,68 @@
             zoom: 8
         });
         directionsDisplay.setMap(map);
-
         var infoWindow = new google.maps.InfoWindow();
-
+        //Synchronizuj z XMLem
         downloadUrl('/?page=xml', function(data) {
             var xml = data.responseXML;
             var markers = xml.documentElement.getElementsByTagName('foodtruck');
-
             Array.prototype.forEach.call(markers, function(markerElem) {
                 var id = markerElem.getAttribute('id');
-
                 var name = markerElem.getAttribute('name');
-                var address = markerElem.getAttribute('address');
-
+                var address = markerElem.getAttribute('street') + ", " + markerElem.getAttribute('city') + " " + markerElem.getAttribute('zipcode');
+                var openHours = {
+                    pon: markerElem.getAttribute('pon'),
+                    wt: markerElem.getAttribute('wt'),
+                    sr: markerElem.getAttribute('sr'),
+                    czw: markerElem.getAttribute('czw'),
+                    pt: markerElem.getAttribute('pt'),
+                    sob: markerElem.getAttribute('sob'),
+                    nd: markerElem.getAttribute('nd')
+                };
                 var point = new google.maps.LatLng(
                     parseFloat(markerElem.getAttribute('lat')),
                     parseFloat(markerElem.getAttribute('lng')));
-
-
-
                 var marker = new google.maps.Marker({
                     map: map,
                     position: point,
 
                 });
-
                 var destination = [
                     parseFloat(markerElem.getAttribute('lat')), parseFloat(markerElem.getAttribute('lng'))
-                    ];
+                ];
+                var contentString = '<div id="content">' +
+                        '<div class="infoWindow">' +
+                        '<h3 id="foodtruckName" class="foodtruckName">' + name + '</h3>' +
+                        '<h5 class="foodtruckAdress">' + address + '</h5>' +
+                        '<div id="bodyContent">' +
+                        '<p><b>' + name + '</b>, oferuje takie potrawy jak:' +
+                        '<ul> +' +
+                        '<li>item2</li> </ul>' +
+                        '<p>Otwarte:<ul>' +
+                        '<li>Poniedziałek: '+ openHours['pon']+'</li>'+
+                        '<li>Wtorek: '+ openHours['wt']+'</li>'+
+                        '<li>Środa: '+ openHours['sr']+'</li>'+
+                        '<li>Czwartek: '+ openHours['czw']+'</li>'+
+                        '<li>Piątek: '+ openHours['pt']+'</li>'+
+                        '<li>Sobota: '+ openHours['sob']+'</li>'+
+                        '<li>Niedziela: '+ openHours['nd']+'</li></ul>'+
+                        '<button type="button" style="margin: 5px" class="btn btn-secondary btn-lg float-right" onclick=cancelNavigation()>Anuluj</button>' +
+                        '<button type="button"  style="margin: 5px" class="btn btn-primary btn-lg float-right" onclick=navigateFoodtruck(' + destination[0] + ',' + destination[1] + ',' + false + ')><i class="fas fa-car"></i></button>' +
+                        '<button type="button" style="margin: 5px" class="btn btn-primary btn-lg float-right" onclick=navigateFoodtruck(' + destination[0] + ',' + destination[1] + ',' + true + ')><i class="fas fa-walking"></i></button>' +
 
-                var contentString = '<div id="content">'+
-                    '<div class="infoWindow">'+
-                    '<h3 id="foodtruckName" class="foodtruckName">'+name+'</h3>'+
-                    '<h5 class="foodtruckAdress">'+address+'</h5>'+
-                    '<div id="bodyContent">'+
-                    '<p><b>'+name+'</b>, oferuje takie potrawy jak:' +
-                    '<ul> <li>item1</li> <li>item2</li> </ul>' +
-                    '<p>Otwarte:' +
-                    '<button type="button"  style="margin: 5px" class="btn btn-primary btn-lg float-right" onclick=navigateFoodtruck('+destination[0]+','+destination[1]+','+false+')><i class="fas fa-car"></i></button>' +
-                    '<button type="button" style="margin: 5px" class="btn btn-primary btn-lg float-right" onclick=navigateFoodtruck('+destination[0]+','+destination[1]+','+true+')><i class="fas fa-walking"></i></button>' +
-                    '</div>'+
-                    '</div>'+
-                    '</div>';
 
-                var infowindow = new google.maps.InfoWindow({
+                        '</div>' +
+                        '</div>' +
+                        '</div>';
+
+
+
+                infowindow = new google.maps.InfoWindow({
                     content: contentString
 
                 });
 
-
+                //Kliknięcie na markera
                 marker.addListener('click', function() {
 
                     infowindow.open(map, marker);
@@ -161,6 +176,7 @@
             });
         });
 
+        //Wyśrodkuj mapę do obecnej lokalizacji użytkownika
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function(position) {
                 var pos = {
@@ -224,6 +240,7 @@
 
     function doNothing() {}
 
+    //Kliknięcię wpisu na liście foodtrucków
     function foodtruckClicked(lat, ltd) {
         var pos = {
             lat: lat,
@@ -235,9 +252,9 @@
         map.setZoom(16);
     }
 
+    //Funkcja google directions , flaga == 1 to znajdz drogę pieszo, flaga==0 znajdź drogę samochodem
     function navigateFoodtruck(lat, long, flag)
     {
-
         if (navigator.geolocation) {
 
             navigator.geolocation.getCurrentPosition(function(position) {
@@ -266,6 +283,7 @@
         directionsService.route(request, function(result, status) {
             if (status == 'OK') {
                 directionsDisplay.setDirections(result);
+                navigating = true;
             }
         });
         },
@@ -277,6 +295,12 @@
             handleLocationError(false, infoWindow, map.getCenter());
         }
     }
+
+    function cancelNavigation(){
+        directionsDisplay.set('directions', null);
+        infowindow.close();
+    }
+
 
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD2EumDPAlhLjDCKlzLwlTgBa1eePjvpnY&callback=initMap"

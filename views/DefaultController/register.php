@@ -10,7 +10,12 @@
 
         <div class="register">
             <h1 class="form-group">Zarejestruj się</h1>
-
+            <?php
+            if (isset($_SESSION['success']))
+            {
+                echo '<div class="success">'.$_SESSION['success'].'</div>';
+                unset($_SESSION['success']);
+            }?>
             <div class="form-group">
             <label for="inputEmail">Adres e-mail</label>
             <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Wprowadź e-mail"

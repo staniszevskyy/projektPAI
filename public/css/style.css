@@ -148,6 +148,13 @@ div#list.card{
 
 }
 
+.success
+{
+    color: limegreen;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+
 #list
 {
     position:fixed; !important;

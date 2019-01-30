@@ -115,28 +115,28 @@ class DefaultController extends AppController
             $_SESSION['r_pass2']=$pass2;
 
             $mapper = new UserMapper();
-//            $user_db = $mapper->getUser($email);
-//            if ($user_db->getEmail() != null) {
-//                var_dump("cond7");
-//                $validation=false;
-//                if ($user_db->getEmail() == $emailSafe)
-//                    $_SESSION['e_email'] = "Istnieje już użytkownik o zadanym adresie email";
-//                
-//                
-//            }
-//            $user_db = $mapper->getUserByNickname($user);
-//            
-//            if ($user_db->getNick() != null) {
-//                var_dump("con8");
-//                $validation=false;
-//                if ($user_db->getNick() == $user)
-//                    $_SESSION['e_nick'] = "Istnieje już użytkownik o zadanym loginie";
-//            }
+            $user_db = $mapper->getUser($email);
+            if ($user_db->getEmail() != null) {
+
+                $validation=false;
+                if ($user_db->getEmail() == $emailSafe)
+                    $_SESSION['e_email'] = "Istnieje już użytkownik o zadanym adresie email";
+
+
+            }
+            $user_db = $mapper->getUserByNickname($user);
+
+            if ($user_db->getNick() != null) {
+
+                $validation=false;
+                if ($user_db->getNick() == $user)
+                    $_SESSION['e_nick'] = "Istnieje już użytkownik o zadanym loginie";
+            }
 
             if ($validation == true ) {
 
                 $mapper->addUser($user, $haslo_hash, $emailSafe, 0);
-            
+                $_SESSION['success'] = "Rejestracja zakończona powodzeniem!!!";
             }
         }
 
