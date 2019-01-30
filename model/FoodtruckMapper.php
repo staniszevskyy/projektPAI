@@ -38,8 +38,10 @@ class FoodtruckMapper
     public function getCertainFoodtrucks($name)
     {
         try {
-            $stmt = $this->database->connect()->prepare('SELECT * FROM foodtrucks WHERE name = :name;');
+            $stmt = $this->database->connect()->prepare("SELECT * FROM foodtrucks WHERE name LIKE concat('%', :name, '%')
+            OR address LIKE concat('%', :name, '%')");
             $stmt->bindParam(':name', $name, PDO::PARAM_STR);
+
             if ($stmt->execute()) {
                 while ($row =  $stmt->fetch(PDO::FETCH_ASSOC))
                 {

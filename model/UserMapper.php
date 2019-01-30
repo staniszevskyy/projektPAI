@@ -21,7 +21,7 @@ class UserMapper
             'role' => $role,
             'user' => $user,
         ];
-        var_dump ($data);
+
         $stmt = $this->database->connect()->prepare('INSERT INTO users (email, password, role, nick) VALUES (:email, :pass, :role, :user);');
         $stmt->execute($data);
 

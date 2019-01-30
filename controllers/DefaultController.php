@@ -67,14 +67,14 @@ class DefaultController extends AppController
 
             if (strlen($user)<3 || strlen($user)>20)
             {
-                var_dump("cond1");
+
                 $validation=false;
                 $_SESSION['e_nick'] = "Nazwa użytkownika musi posiadać od 3 do 20 znaków";
             }
            
             if (ctype_alnum($user)==false)
             {
-                var_dump("cond2");
+
                 $validation=false;
                 $_SESSION['e_nick']="Nick moze skladac sie tylko z liter i cyfr(bez polskich znaków)";
             }
@@ -83,28 +83,28 @@ class DefaultController extends AppController
             
             if(filter_var($emailSafe, FILTER_VALIDATE_EMAIL)==false || $emailSafe!=$email)
             {
-                var_dump("cond3");
+
                 $validation=false;
                 $_SESSION['e_email']="Podaj poprawny adres e-mail";
             }
 
             if (strlen($pass1) <8 || strlen($pass2) >20)
             {
-                var_dump("con4");
+
                 $validation=false;
                 $_SESSION['e_pass']="Hasło musi posiadać od 8 do 20 znaków";
             }
 
             if ($pass1 != $pass2)
             {
-                var_dump("cond5");
+
                 $validation=false;
                 $_SESSION['e_pass']="Podane hasla nie sa identyczne";
 
             }
 
             if (!(isset($_POST['accept']))){
-                var_dump("cond6");
+
                 $validation=false;
                 $_SESSION['e_accept']="Nie zaakceptowano regulaminu";
             }
@@ -132,9 +132,9 @@ class DefaultController extends AppController
 //                if ($user_db->getNick() == $user)
 //                    $_SESSION['e_nick'] = "Istnieje już użytkownik o zadanym loginie";
 //            }
-            var_dump($validation);
+
             if ($validation == true ) {
-                var_dump('jestesmy tu');
+
                 $mapper->addUser($user, $haslo_hash, $emailSafe, 0);
             
             }

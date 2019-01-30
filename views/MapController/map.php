@@ -26,7 +26,7 @@
 
 
     if (isset($_POST['search']) and $_POST['search']!=""){
-        var_dump($_POST['search']);
+
         $get->getCertainFoodtrucks($_POST['search']);
 
     }
