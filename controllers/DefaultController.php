@@ -32,12 +32,16 @@ class DefaultController extends AppController
         if ($this->isPost()) {
 
             $user = $mapper->getUser($_POST['email']);
+            $_POST['password'] = md5($_POST['password']);
+
+
 
             if(!$user) {
                 return $this->render('login', ['message' => ['Email not recognized']]);
             }
 
-            if ($user->getPassword() !== $_POST['password']) {
+            if ($user->getPassword() != $_POST['password'] ) {
+
                 return $this->render('login', ['message' => ['Wrong password']]);
             } else {
                 $_SESSION["id"] = $user->getEmail();
@@ -63,7 +67,7 @@ class DefaultController extends AppController
             $emailSafe = filter_var($email, FILTER_SANITIZE_EMAIL);
             $pass1 = $_POST['pass1'];
             $pass2 = $_POST['pass2'];
-            $haslo_hash = password_hash($pass1, PASSWORD_DEFAULT);
+            $haslo_hash = md5($pass1);
 
             if (strlen($user)<3 || strlen($user)>20)
             {
