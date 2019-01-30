@@ -44,9 +44,9 @@ class DefaultController extends AppController
 
                 return $this->render('login', ['message' => ['Wrong password']]);
             } else {
-                $_SESSION["id"] = $user->getEmail();
+                $_SESSION["id"] = $user->getNick();
                 $_SESSION["role"] = $user->getRole();
-
+                $_SESSION["logged"] = true;
                 $url = "http://$_SERVER[HTTP_HOST]/";
                 header("Location: {$url}?page=index");
                 exit();
@@ -167,7 +167,7 @@ class DefaultController extends AppController
     {
         session_unset();
         session_destroy();
+        $this->render('home');
 
-        $this->render('index', ['text' => 'You have been successfully logged out!']);
     }
 }
