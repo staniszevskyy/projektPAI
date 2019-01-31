@@ -4,7 +4,7 @@
 <?php include(dirname(__DIR__).'/head.html') ?>
 
 <body id="contact-back">
-
+<?php include(dirname(__DIR__).'/navbartop.html') ?>
     <div class="cardstyle">
         <div class="card" style="border: 0px;">
             <h1 class="card-title">Kontakt</h1>

@@ -4,9 +4,9 @@
 <?php include(dirname(__DIR__).'/head.html') ?>
 
 <body id="gain-back">
-
+<?php include(dirname(__DIR__).'/navbartop.html') ?>
 <div class="cardstyle">
-    <div class="gain">
+    <div id="gain">
         <div class="card" style="border: 0px">
             <h1 class="card-title">Co zyskasz?</h1>
             <div class="card-body">

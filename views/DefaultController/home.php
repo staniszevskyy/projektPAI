@@ -6,30 +6,7 @@
 <body>
 
     <div id="container">
-        <?php if (isset($_SESSION['logged'])){ ?>
-            <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-                <a class="navbar-brand" href="#">Witaj, <?php echo $_SESSION['id']?></a>
-                <!--            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">-->
-                <!--                <span class="navbar-toggler-icon"></span>-->
-                <!--            </button>-->
-
-                <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Uzupełnij profil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Panel Admina</a>
-                        </li>
-
-                    </ul>
-                    <form action="?page=logout" method="POST">
-                        <button type="submit" class="btn btn-primary btn-lg float-right" > Wyloguj się </button>
-                    </form>
-                </div>
-            </nav>
-
-        <?php } ?>
+        <?php include(dirname(__DIR__).'/navbartop.html') ?>
 
         <div class="main">
             <div id="header" >
@@ -39,7 +16,7 @@
 
             </div>
             <div id="navigation-bar">
-                <?php include(dirname(__DIR__).'/navbar.html') ?>
+                <?php include(dirname(__DIR__) . '/navbar.html') ?>
             </div>
 
 

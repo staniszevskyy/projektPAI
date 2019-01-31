@@ -1,0 +1,42 @@
+
+<div id="navbar">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+
+        <a class="navbar-brand" href="#">Witaj, <?php
+        if (isset($_SESSION['id']))
+        {
+            echo $_SESSION['id'];
+        }
+        else
+        {
+            echo "nieznajomy";
+        }
+        ?></a>
+        <!--            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">-->
+        <!--                <span class="navbar-toggler-icon"></span>-->
+        <!--            </button>-->
+
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a href="?page=index"><i class="fas fa-home"></i></a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Uzupełnij profil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Panel Admina</a>
+                </li>
+
+            </ul>
+            <?php if (isset($_SESSION['logged'])){?>
+            <form action="?page=logout" method="POST">
+                <button type="submit" class="btn btn-primary btn-lg float-right" > Wyloguj </button>
+            </form>
+            <?php }?>
+            <?php if (!isset($_SESSION['logged'])){?>
+                <a class="nav-link" href="?page=login">Zaloguj się</a>
+            <?php }?>
+        </div>
+    </nav>
+</div>

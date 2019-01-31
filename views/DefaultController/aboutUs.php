@@ -4,6 +4,7 @@
 <?php include(dirname(__DIR__).'/head.html') ?>
 
 <body id="about-back">
+<?php include(dirname(__DIR__).'/navbartop.html') ?>
 <div class="about">
     <div class="cardstyle"
     <div class="card" style="width: 60rem;">

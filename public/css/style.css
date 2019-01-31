@@ -140,6 +140,10 @@ div#list.card{
     color: #1da1f2;
 }
 
+.fa-home {
+    padding: 13px;
+}
+
 .error
 {
     color:red;
@@ -164,6 +168,7 @@ div#list.card{
     height: 100rem; !important;
 
 }
+
 
 /*margin: 0;*/
 /*position: absolute !important;              !* 2 *!*/

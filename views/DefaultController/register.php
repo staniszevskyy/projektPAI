@@ -5,6 +5,7 @@
 
 
 <body id="register-back">
+<?php include(dirname(__DIR__).'/navbartop.html') ?>
 <div class="register-back">
     <form action="?page=register" method="post">
 
