@@ -35,11 +35,27 @@ if ($stmt->execute()) {
         $newnode->setAttribute("pt", $row['pt']);
         $newnode->setAttribute("sob", $row['sob']);
         $newnode->setAttribute("nd", $row['nd']);
+//        $stmt2 = $database->connect()->prepare(
+//            "SELECT f.name, f.price FROM food f, foodtrucks fo, foodlist l
+//                      WHERE l.foodFK=f.idfood AND l.foodtruckFK=fo.id AND fo.id LIKE ':id';");
+//        $stmt2->bindParam(':id', $row['id'], PDO::PARAM_INT);
+//        if ($stmt2->execute())
+//        {
+//            var_dump('im here');
+//            $counter = 1;
+//            while ($row =  $stmt2->fetch(PDO::FETCH_ASSOC))
+//            {
+//                $newnode->setAttribute("food".$counter, $row['name']);
+//                $newnode->setAttribute("price".$counter, $row['price']);
+//                $counter += 1;
+//            }
+//        }
+}
 
 
-    }
-    $stmt=null;
 
-    $XMLfile = $doc->saveXML();
+        $XMLfile = $doc->saveXML();
+        $stmt=null;
+
     echo $XMLfile;
     }

@@ -21,10 +21,10 @@
             </thead>
             <tbody>
             <tr>
-                <td><?= $user->getName(); ?></td>
-                <td><?= $user->getSurname(); ?></td>
+                <td><?= $user->getNick(); ?></td>
                 <td><?= $user->getEmail(); ?></td>
                 <td><?= $user->getRole(); ?></td>
+
                 <td>-</td>
             </tr>
             </tbody>

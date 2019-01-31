@@ -21,12 +21,16 @@
                 <li class="nav-item active">
                     <a href="?page=index"><i class="fas fa-home"></i></a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Uzupełnij profil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Panel Admina</a>
-                </li>
+
+                <?php
+                if (isset($_SESSION['role']) && $_SESSION['role'] == 1)
+                { ?>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="?page=admin">Panel Admina</a>
+                    </li>
+
+                <?php } ?>
 
             </ul>
             <?php if (isset($_SESSION['logged'])){?>

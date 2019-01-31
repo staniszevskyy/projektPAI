@@ -23,7 +23,7 @@
 <?php
     require_once __DIR__.'/../../model/FoodtruckMapper.php';
     $get = new FoodtruckMapper();
-
+    $idx=0;
 
     if (isset($_POST['search']) and $_POST['search']!=""){
 
@@ -33,9 +33,26 @@
 
     else{
         $get->getAllFoodtrucks();
+
+
     }
     $get = $get->getFoodtruckList();
+
+
+//    foreach ($get as $key => $value) {
+//
+//    $food=$value->getFood();
+//    var_dump($food);
+//    foreach ($value as $klucz => $food){
+//        var_dump($food);
+//
+//    }
+//}
+
+
+
     unset($_POST['search']);
+
 
 ?>
 
@@ -45,7 +62,7 @@
 <div id="list">
     <div class="card" >
         <div class="card-body">
-            <h5 class="card-title">Wyszukaj foodtruck</h5>
+            <h4 class="card-title">Wyszukaj foodtruck</h4>
             <form  action="?page=search" method="POST">
                 <div class="form-group">
 
@@ -87,6 +104,8 @@
 
 <script>
     var map;
+
+    var food;
     //Inicjuj mapę
     function initMap() {
         navigating=false;
@@ -108,6 +127,7 @@
             var markers = xml.documentElement.getElementsByTagName('foodtruck');
             Array.prototype.forEach.call(markers, function(markerElem) {
                 var id = markerElem.getAttribute('id');
+                console.log(id);
                 var name = markerElem.getAttribute('name');
                 var address = markerElem.getAttribute('street') + ", " + markerElem.getAttribute('city') + " " + markerElem.getAttribute('zipcode');
                 var openHours = {
@@ -122,6 +142,16 @@
                 var point = new google.maps.LatLng(
                     parseFloat(markerElem.getAttribute('lat')),
                     parseFloat(markerElem.getAttribute('lng')));
+
+                document.cookie = "gowno="+id;
+
+                <?php $idx= htmlentities($_COOKIE['gowno'], 3, 'UTF-8');
+                    $idx-=1;
+                ?>
+
+                food = <?php echo json_encode($get[$idx]->getFood()); ?>;
+
+                console.log(food);
                 var marker = new google.maps.Marker({
                     map: map,
                     position: point,
@@ -136,8 +166,9 @@
                         '<h5 class="foodtruckAdress">' + address + '</h5>' +
                         '<div id="bodyContent">' +
                         '<p><b>' + name + '</b>, oferuje takie potrawy jak:' +
-                        '<ul> +' +
-                        '<li>item2</li> </ul>' +
+                        // '<ul>'+ food
+
+                        '<ul>' +
                         '<p>Otwarte:<ul>' +
                         '<li>Poniedziałek: '+ openHours['pon']+'</li>'+
                         '<li>Wtorek: '+ openHours['wt']+'</li>'+
@@ -170,10 +201,8 @@
                     map.setZoom(20);
 
                 });
-
-
-
             });
+
         });
 
         //Wyśrodkuj mapę do obecnej lokalizacji użytkownika

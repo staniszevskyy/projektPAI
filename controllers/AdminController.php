@@ -15,6 +15,10 @@ class AdminController extends AppController
     public function index(): void
     {
         $user = new UserMapper;
+        if (!isset($_SESSION['role']) || $_SESSION['role']!= 1)
+        {
+            header ("Location: index.php");
+        }
         $this->render('index', ['user' => $user->getUser($_SESSION['id'])]);
     }
 

@@ -10,13 +10,23 @@
     <form action="?page=register" method="post">
 
         <div class="register">
-            <h1 class="form-group">Zarejestruj się</h1>
+            <h1 id="registerh1" class="form-group">Zarejestruj się</h1>
             <?php
             if (isset($_SESSION['success']))
             {
                 echo '<div class="success">'.$_SESSION['success'].'</div>';
                 unset($_SESSION['success']);
             }?>
+
+            <div class="form-group">
+                <label for="inputPass2">Imię</label>
+                <input type="text" class="form-control" id="name" name="name" placeholder="Podaj imię">
+            </div>
+            <div class="form-group">
+                <label for="inputPass2">Nazwisko</label>
+                <input type="text" class="form-control" id="surname" name="surname" placeholder="Podaj nazwisko">
+            </div>
+
             <div class="form-group">
             <label for="inputEmail">Adres e-mail</label>
             <input type="email" class="form-control" id="inputEmail" name="email" placeholder="Wprowadź e-mail"
@@ -59,14 +69,7 @@
 
         <div class="form-group">
             <label for="inputPass1">Hasło</label>
-            <input type="password" class="form-control" id="inputPass1" name="pass1" placeholder="Wprowadź hasło" value="
-            <?php
-                   if (isset($_SESSION['r_pass']))
-                   {
-                       echo $_SESSION['r_pass'];
-                       unset ($_SESSION['r_pass']);
-                   }?>
-            ">
+            <input type="password" class="form-control" id="inputPass1" name="pass1" placeholder="Wprowadź hasło" value="">
             <?php
             if (isset($_SESSION['e_pass']))
             {
@@ -81,7 +84,9 @@
             <input type="password" class="form-control" id="inputPass2" name="pass2" placeholder="Powtórz wprowadzone hasło">
         </div>
 
-        <div class="form-group form-check">
+
+
+            <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="acceptance" name="accept"">
             <label class="form-check-label" for="acceptance">Akceptuję regulamin</label>
             <?php
@@ -92,7 +97,7 @@
             }
             ?>
         </div>
-        <button type="submit" class="btn btn-primary">Zarejestruj</button>
+        <button type="submit" class="btn btn-primary ">Zarejestruj</button>
         </div>
 
     </form>

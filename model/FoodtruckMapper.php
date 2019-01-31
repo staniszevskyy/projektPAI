@@ -17,6 +17,8 @@ class FoodtruckMapper
 
     public function getAllFoodtrucks()
     {
+
+
         try {
             $stmt = $this->database->connect()->prepare("SELECT * FROM foodtrucks
             INNER JOIN addresses as a, open_hours as o
@@ -29,6 +31,28 @@ class FoodtruckMapper
                     $this->foodtruckList[] = $foodtruck;
                 }
             }
+
+            foreach ($this->foodtruckList as $key => $value) {
+
+                $stmt2 = $this->database->connect()->prepare(
+                    "SELECT f.name, f.price FROM food f, foodtrucks fo, foodlist l
+                      WHERE l.foodFK=f.idfood AND l.foodtruckFK=fo.id AND fo.name = :name;");
+                $name = $value->getName();
+
+                $stmt2->bindParam(':name', $name, PDO::PARAM_STR);
+
+                if ($stmt2->execute()) {
+
+
+                    while ($row = $stmt2->fetch(PDO::FETCH_NUM)) {
+
+                        $value->addFood($row[0], $row[1]);
+
+                    }
+                }
+            }
+
+
 
         }
         catch(PDOException $e) {
@@ -60,6 +84,8 @@ class FoodtruckMapper
                     $this->foodtruckList[] = $foodtruck;
                 }
             }
+
+
 
         }
         catch(PDOException $e) {

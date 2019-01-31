@@ -35,7 +35,6 @@ class DefaultController extends AppController
             $_POST['password'] = md5($_POST['password']);
 
 
-
             if(!$user) {
                 return $this->render('login', ['message' => ['Email not recognized']]);
             }
@@ -44,8 +43,10 @@ class DefaultController extends AppController
 
                 return $this->render('login', ['message' => ['Wrong password']]);
             } else {
+
                 $_SESSION["id"] = $user->getNick();
                 $_SESSION["role"] = $user->getRole();
+
                 $_SESSION["logged"] = true;
                 $url = "http://$_SERVER[HTTP_HOST]/";
                 header("Location: {$url}?page=index");
@@ -68,6 +69,8 @@ class DefaultController extends AppController
             $pass1 = $_POST['pass1'];
             $pass2 = $_POST['pass2'];
             $haslo_hash = md5($pass1);
+            $name = $_POST['name'];
+            $surname = $_POST['surname'];
 
             if (strlen($user)<3 || strlen($user)>20)
             {
@@ -139,7 +142,7 @@ class DefaultController extends AppController
 
             if ($validation == true ) {
 
-                $mapper->addUser($user, $haslo_hash, $emailSafe, 0);
+                $mapper->addUser($user, $haslo_hash, $emailSafe, 0, $name, $surname);
                 $_SESSION['success'] = "Rejestracja zakończona powodzeniem!!!";
             }
         }

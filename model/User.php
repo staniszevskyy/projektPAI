@@ -6,14 +6,18 @@ class User
     private $email;
     private $password;
     private $role;
+    private $name;
+    private $surname;
 
-    public function __construct($email, $password, $role, $nick)
+    public function __construct($email, $password, $role, $nick, $name, $surname)
     {
 
         $this->email = $email;
         $this->password = $password;
         $this->role = $role;
         $this->nick = $nick;
+        $this->name = $name;
+        $this->surname = $surname;
     }
 
 
@@ -59,6 +63,29 @@ class User
     {
         $this->nick = $nick;
     }
+
+  
+    public function getName()
+    {
+        return $this->name;
+    }
+
+
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    public function getSurname()
+    {
+        return $this->surname;
+    }
+
+   function setSurname($surname): void
+    {
+        $this->surname = $surname;
+    }
+
 
 
 }

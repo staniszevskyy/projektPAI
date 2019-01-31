@@ -6,7 +6,7 @@ class Foodtruck
     private $address;
     private $lat;
     private $ltd;
-
+    public $food;
 
     public function __construct($name, $address, $lat, $ltd)
     {
@@ -14,6 +14,7 @@ class Foodtruck
         $this->address = $address;
         $this->lat = $lat;
         $this->ltd = $ltd;
+        $this->food=array();
     }
 
 
@@ -39,6 +40,18 @@ class Foodtruck
     }
 
 
+    public function getFood()
+    {
+        return $this->food;
+    }
+
+
+
+    public function addFood($name, $price)
+    {
+        $this->food[$name] = $price;
+
+    }
 
 
 }

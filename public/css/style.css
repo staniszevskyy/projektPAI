@@ -96,11 +96,28 @@ span {
 
 
 
-.card-title {
-    padding: 10px 0px 0px 60px;
-    font-family: "Comic Sans MS";
+#contact-title , #aboutUs{
+    /*padding: 10px 0px 0px 60px;*/
+    font-family: 'Coiny', cursive;
+    font-size: 80px; !important;
+    margin-left: 20px;
+    margin-top: 20px;}
+
+#registerh1{
+    font-family: 'Coiny', cursive;
+    margin-top: 20px;
 }
 
+.card-title {
+    font-family: "Comic Sans MS";
+    font-size : 40px;
+}
+
+
+.card-body {
+    font-size: 22px;
+
+}
 
 #register-back, #body_back, #contact-back, #about-back, #gain-back{
     background-color: #E5C6C4;
@@ -167,6 +184,11 @@ div#list.card{
     width: 39rem; !important;
     height: 100rem; !important;
 
+}
+
+.row
+{
+    margin-top: 20px;
 }
 
 

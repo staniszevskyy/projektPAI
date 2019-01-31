@@ -13,16 +13,18 @@ class UserMapper
     }
 
 
-    public function addUser($user, $haslo, $email, $role){
+    public function addUser($user, $haslo, $email, $role, $name, $surname){
 
         $data = [
             'email' => $email,
             'pass' => $haslo,
             'role' => $role,
             'user' => $user,
+            'name' => $name,
+            'surname' => $surname
         ];
 
-        $stmt = $this->database->connect()->prepare('INSERT INTO users (email, password, role, nick) VALUES (:email, :pass, :role, :user);');
+        $stmt = $this->database->connect()->prepare('INSERT INTO users (email, password, role, nick, name, surname) VALUES (:email, :pass, :role, :user, :name, :surname);');
         $stmt->execute($data);
 
     }
@@ -37,7 +39,7 @@ class UserMapper
 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
             $stmt->connection = null;
-            return new User($user['email'], $user['password'], $user['password'], $user['nick']);
+            return new User($user['email'], $user['password'], $user['role'], $user['nick'], $user['name'], $user['surname']);
         }
         catch(PDOException $e) {
             return 'Error: ' . $e->getMessage();
@@ -52,7 +54,7 @@ class UserMapper
 
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            return new User($user['email'], $user['password'], $user['password'], $user['nick']);
+            return new User($user['email'], $user['password'], $user['role'], $user['nick'], $user['name'], $user['surname']);
         }
         catch(PDOException $e) {
             return 'Error: ' . $e->getMessage();

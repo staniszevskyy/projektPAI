@@ -31,10 +31,7 @@ class Routing
                 'controller' => 'DefaultController',
                 'action' => 'aboutUs'
             ],
-            'gain' => [
-                'controller' => 'DefaultController',
-                'action' => 'whatYouGain'
-            ],
+
             'contact' => [
                 'controller' => 'DefaultController',
                 'action' => 'contactInfo'
