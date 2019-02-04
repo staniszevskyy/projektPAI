@@ -116,6 +116,17 @@ class DefaultController extends AppController
                 $_SESSION['e_accept']="Nie zaakceptowano regulaminu";
             }
 
+            $secret = "6LceJ48UAAAAAHuyopYnr-cs_Gh7ar8nwL6i27nj";
+            $check = file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret='.$secret.'&response='.$_POST['g-recaptcha-response']);
+            $response = json_decode($check);
+
+
+            if ($response->success==false)
+            {
+                $validation=false;
+                $_SESSION['e_bot']="Potwierdź, że nie jesteś botem";
+            }
+
             $_SESSION['r_user']=$user;
             $_SESSION['r_email']=$email;
             $_SESSION['r_pass1']=$pass1;

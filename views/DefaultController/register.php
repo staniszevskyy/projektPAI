@@ -97,6 +97,19 @@
             }
             ?>
         </div>
+            <div class="form-group">
+                <div class="g-recaptcha" data-sitekey="6LceJ48UAAAAAJxVcJPiFqgorY_hePi8iMnbNei7"></div>
+
+            <br />
+            <?php
+            if (isset($_SESSION['e_bot']))
+            {
+                echo '<div class="error">'.$_SESSION['e_bot'].'</div>';
+                unset($_SESSION['e_bot']);
+            }
+            ?>
+            </div>
+
         <button type="submit" class="btn btn-primary ">Zarejestruj</button>
         </div>
 

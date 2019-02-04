@@ -7,6 +7,9 @@ function getUsers() {
     const apiUrl = "http://localhost:8000";
     const $list = $('.users-list');
 
+
+
+
     $.ajax({
         url : apiUrl + '/?page=admin_users',
         dataType : 'json'

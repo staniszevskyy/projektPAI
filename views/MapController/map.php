@@ -7,6 +7,12 @@
     <link rel="stylesheet" type="text/css" href="../public/css/style.css" />
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+    <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous">
+    </script>
+
     <style>
 
         /* Optional: Makes the sample page fill the window. */
@@ -22,6 +28,7 @@
 <body>
 <?php
     require_once __DIR__.'/../../model/FoodtruckMapper.php';
+    require_once __DIR__.'/../../Database.php';
     $get = new FoodtruckMapper();
     $idx=0;
 
@@ -102,7 +109,10 @@
 
 
 
-<script>
+<script type="text/javascript">
+
+
+
     var map;
 
     var food;
@@ -127,7 +137,6 @@
             var markers = xml.documentElement.getElementsByTagName('foodtruck');
             Array.prototype.forEach.call(markers, function(markerElem) {
                 var id = markerElem.getAttribute('id');
-                console.log(id);
                 var name = markerElem.getAttribute('name');
                 var address = markerElem.getAttribute('street') + ", " + markerElem.getAttribute('city') + " " + markerElem.getAttribute('zipcode');
                 var openHours = {
@@ -143,15 +152,71 @@
                     parseFloat(markerElem.getAttribute('lat')),
                     parseFloat(markerElem.getAttribute('lng')));
 
-                document.cookie = "gowno="+id;
 
-                <?php $idx= htmlentities($_COOKIE['gowno'], 3, 'UTF-8');
-                    $idx-=1;
+
+
+                $.ajax({
+
+                    url: 'http://localhost:8000/?page=map',
+                    type: 'POST',
+                    data: {
+                        index: id
+                    },
+
+
+                    success: function(){
+
+                    }});
+<!--                --><?php
+//                echo $_SESSION['index'];
+//                ?>
+
+
+//
+//                document.cookie = "id"+"="+id;
+                //console.log(<?php //echo $_COOKIE['id']; ?>//);
+                //TU DZIALA DOBRZE!!!
+
+
+
+
+                <?php //$idx= htmlentities($_COOKIE['gowno'], 3, 'UTF-8');
+
+
+                //?>
+                //
+                //food = <?php //echo json_encode($get[$idx]->getFood()); ?>//;
+                //
+                //console.log(food);
+
+                <?php
+
+                    $database = new Database();
+                    if (isset($_COOKIE['id'])) {
+                        $id = $_COOKIE["id"];
+                    }
+
+
+                    $food = [];
+                    $stmt=$database->connect()->prepare('SELECT f.name, f.price FROM food f, foodtrucks fo, foodlist l
+                    WHERE l.foodFK=f.idfood AND l.foodtruckFK=fo.id AND fo.id=:idx;');
+                    $stmt->bindParam(':idx', $id, PDO::PARAM_INT);
+
+
+                if ($stmt->execute()) {
+
+                    while ($row =  $stmt->fetch(PDO::FETCH_ASSOC))
+                    {
+
+                        $food[] = $row['name'];
+
+                    }
+                }
+
                 ?>
 
-                food = <?php echo json_encode($get[$idx]->getFood()); ?>;
+                food = <?php echo json_encode($food); ?>;
 
-                console.log(food);
                 var marker = new google.maps.Marker({
                     map: map,
                     position: point,
@@ -166,9 +231,12 @@
                         '<h5 class="foodtruckAdress">' + address + '</h5>' +
                         '<div id="bodyContent">' +
                         '<p><b>' + name + '</b>, oferuje takie potrawy jak:' +
-                        // '<ul>'+ food
+                        '<ul>';
+                        for (var i = 0; i < food.length; i++) {
+                            contentString+= '<li>'+ food[i] + '</li>';
+                        }
 
-                        '<ul>' +
+                contentString+= '</ul>' +
                         '<p>Otwarte:<ul>' +
                         '<li>Poniedziałek: '+ openHours['pon']+'</li>'+
                         '<li>Wtorek: '+ openHours['wt']+'</li>'+
@@ -198,7 +266,7 @@
 
                     infowindow.open(map, marker);
                     map.panTo(point);
-                    map.setZoom(20);
+                    map.setZoom(18);
 
                 });
             });
@@ -233,6 +301,7 @@
 
 
                 map.setCenter(pos);
+                map.setZoom(14);
             }, function() {
                 handleLocationError(true, infoWindow, map.getCenter());
             });
@@ -278,7 +347,7 @@
 
         // map.setCenter(pos);
         map.panTo(pos);
-        map.setZoom(16);
+        map.setZoom(15);
     }
 
     //Funkcja google directions , flaga == 1 to znajdz drogę pieszo, flaga==0 znajdź drogę samochodem
